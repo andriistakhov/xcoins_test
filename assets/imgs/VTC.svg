@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="42px" height="42px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.1 (47250) - http://www.bohemiancoding.com/sketch -->
+    <title>VTC</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Add-Account_Mobile_Step_1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-22.000000, -609.000000)">
+        <g id="Group-2" transform="translate(-1.000000, 20.000000)" fill="#1B5C2E" fill-rule="nonzero">
+            <g id="Currency-Selection_Mobile-Copy-4" transform="translate(1.000000, 569.000000)">
+                <g id="glyph/BTC" transform="translate(22.000000, 20.000000)">
+                    <g id="VTC">
+                        <path d="M38.9452863,10.0905463 L22.0462996,34.0133392 C22.0462996,34.0133392 21.7195507,34.5127137 21.0569868,34.5127137 C20.3938678,34.5127137 19.9614714,33.9844758 19.9614714,33.9844758 L17.0460793,30.1180705 L34.6044846,5.00521586 C30.9395683,1.88444934 26.1896828,0 20.9988899,0 C9.40152423,0 0,9.40152423 0,20.9988899 C0,32.5962555 9.40152423,41.9977797 20.9988899,41.9977797 C32.5962555,41.9977797 41.9977797,32.5962555 41.9977797,20.9988899 C41.9977797,17.0040793 40.8820969,13.2697797 38.9452863,10.0905463 Z M5.35786784,20.4665815 L7.18810573,18.4185727 L8.73248458,20.4665815 L5.35786784,20.4665815 Z M7.73651101,17.8050396 L7.77906608,17.7571189 L16.0512159,17.7571189 L20.5783348,23.6552511 L16.5348634,29.4408899 L7.73651101,17.8050396 Z" id="Shape"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,15 @@
+{
+    "Bitcoin": "Bitcoin for everyone",
+    "loginButton": "Login",
+    "signUpButton": "Sign Up",
+    "forgotPassword": "Forgot password?",
+    "dontHaveAccount": "Don't have account?",
+    "loginError": "Login is incorrect, try again",
+    "loginErrorSignUp": "Please complete all required fields",
+    "passwordError": "Password is incorrect, try again",
+    "passwordErrorSignUp": "Password doesn't match",
+    "passwordHelpHint": "Password must be at least 6 characters",
+    "loginHint": "Login",
+    "passwordHint": "Password",
+    "repeatPasswordHint": "Repeat Password"
+}
