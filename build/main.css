@@ -40373,6 +40373,10 @@ page-home .term_i {
   margin-bottom: 2px;
 }
 
+page-login body {
+  min-height: 480px;
+}
+
 page-login input {
   -webkit-user-select: text !important;
   /* Chrome, Opera, Safari */
@@ -40574,6 +40578,12 @@ page-login .content {
   }
 }
 
+@media screen and (max-width: 320px) {
+  page-login .content {
+    min-width: unset;
+  }
+}
+
 @media screen and (max-width: 600px) {
   page-login .ng-trigger-signUpTrigger {
     -webkit-box-pack: center;
@@ -40680,6 +40690,12 @@ page-login .error-pop-up p {
   text-align: center;
 }
 
+@media screen and (max-width: 600px) {
+  page-login .error-pop-up p {
+    width: 77%;
+  }
+}
+
 page-login .error-pop-up p b {
   text-transform: uppercase;
   font-weight: 800;
@@ -40729,6 +40745,14 @@ page-login .logo {
     padding-top: 85px;
     min-height: 230px;
     height: 100%;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  page-login .logo {
+    width: 100%;
+    padding-left: 25px;
+    padding-right: 25px;
   }
 }
 
@@ -40820,6 +40844,14 @@ page-login .input-fields-container {
     -ms-flex-pack: end;
     justify-content: flex-end;
     padding-bottom: 20px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  page-login .input-fields-container {
+    width: 100%;
+    padding-left: 25px;
+    padding-right: 25px;
   }
 }
 
@@ -40917,6 +40949,15 @@ page-login .no-radius {
 
 page-login .button-md:hover:not(.disable-hover) {
   background: #1b6dff;
+}
+
+page-login .button-md.activated {
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+}
+
+page-login .button-clear-md.activated {
+  background: none !important;
 }
 
 page-login .button-md:hover:not(.disable-hover):active {
@@ -41068,7 +41109,7 @@ page-login .background-image {
 
 page-login .overlay-bg {
   position: absolute;
-  z-index: -50;
+  z-index: -1;
   width: 100%;
   height: 102%;
   opacity: 0.4;
@@ -41083,6 +41124,15 @@ page-login .overlay-bg {
   height: auto;
   -webkit-transform: translateX(-50%) translateY(-50%);
   transform: translateX(-50%) translateY(-50%);
+}
+
+page-login .overlay-pic {
+  position: absolute;
+  z-index: -50;
+  background-image: url("../assets/imgs/video-back.png");
+  width: 100%;
+  height: 100%;
+  background-position: center center;
 }
 
 page-login .input-item {
@@ -41153,7 +41203,7 @@ page-login .error-message ion-icon, page-login .error-message custom-icon {
 }
 
 page-login .error-message-signup {
-  color: #df0000;
+  color: #D50005;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -41292,6 +41342,15 @@ page-login .signup-input-fields-container {
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
+}
+
+@media screen and (max-width: 320px) {
+  page-login .signup-input-fields-container {
+    width: 100%;
+    padding-left: 25px;
+    padding-right: 25px;
+    max-width: unset;
+  }
 }
 
 page-login .input-login-su {
