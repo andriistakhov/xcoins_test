@@ -39916,12 +39916,17 @@ ion-navbar.toolbar {
 
 /*** CUSTOM CSS ***/
 @font-face {
-  font-family: "opensans-font";
-  src: url(../assets/fonts/OpenSans-Regular.ttf);
+  font-family: "lato-font";
+  src: url(../assets/fonts/Lato-Regular.ttf);
+}
+
+@font-face {
+  font-family: "roboto-font";
+  src: url(../assets/fonts/Roboto-Regular.ttf);
 }
 
 * {
-  font-family: "opensans-font";
+  font-family: "roboto-font";
 }
 
 .outer-content {
@@ -40255,7 +40260,7 @@ page-home .m_cat {
   height: 35px;
   width: 300px;
   color: white;
-  font-family: Lato;
+  font-family: lato-font;
   font-size: 12px;
   font-weight: bold;
   line-height: 15px;
@@ -40365,7 +40370,7 @@ page-home .terms {
 
 page-home .term_i {
   color: #FFFFFF;
-  font-family: Lato;
+  font-family: lato-font;
   font-size: 14px;
   font-weight: 500;
   line-height: 17px;
@@ -40637,12 +40642,6 @@ page-login .error-pop-up {
   flex-direction: column;
   font-size: 2.4rem;
   z-index: 100;
-}
-
-@media screen and (max-width: 600px) {
-  page-login .error-pop-up {
-    background-color: #FFC3D5;
-  }
 }
 
 page-login .error-pop-up .close-error {
@@ -41374,12 +41373,6 @@ page-login .floating-input input {
   font-size: 16px;
 }
 
-@media screen and (max-width: 600px) {
-  page-login .floating-input input {
-    font-size: 18px;
-  }
-}
-
 page-login .pass-field {
   margin: 0 0 0 4px;
   font-size: 1.5rem;
@@ -41399,6 +41392,18 @@ page-login .pass-hint-label {
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
+}
+
+page-login .button:focus, page-login .focus-outline:focus {
+  border: none !important;
+  outline: none !important;
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+}
+
+page-main .wrapp {
+  width: 100%;
+  padding: 31px;
 }
 
 page-main .main-cont {
@@ -41422,6 +41427,7 @@ page-main .second-step {
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  background: violet;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
   -webkit-flex-direction: column;
@@ -41441,7 +41447,7 @@ page-main .first-step {
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
-  background: #797979;
+  background: white;
 }
 
 page-main .header-md::after, page-main .tabs-md[tabsPlacement="top"] > .tabbar::after, page-main .footer-md::before, page-main .tabs-md[tabsPlacement="bottom"] > .tabbar::before {
@@ -41545,8 +41551,28 @@ page-main .form {
 }
 
 page-main .btn-add-account {
-  width: 100%;
-  height: 10%;
+  color: #676F7D;
+  font-family: lato-font;
+  font-size: 27px;
+  text-align: left;
+  background-color: white;
+  margin-top: 4px;
+  margin-bottom: 35px;
+  display: inline-block;
+  padding: 0;
+}
+
+page-main .btn-before {
+  width: 13px;
+  height: 31px;
+  background-image: url(../assets/img/m_icons/Arrow-back.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  display: inline-block;
+  top: 5px;
+  margin-right: 24px;
+  position: relative;
 }
 
 page-main .add-acc-container {
@@ -41565,7 +41591,7 @@ page-main .add-acc-container {
 
 page-main .add-acc-name {
   width: 100%;
-  padding: 5%;
+  padding: 22px;
   background: #EAEBEF;
   display: -webkit-box;
   display: -webkit-flex;
@@ -41580,6 +41606,7 @@ page-main .add-acc-name {
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
+  margin-bottom: 76px;
 }
 
 page-main .list-item {
@@ -41628,6 +41655,12 @@ page-main .user-toolbar {
   background: #488aff;
 }
 
+page-main .user-info-container-logo .user-toolbar {
+  color: #8E9AA8;
+  background: #F1F2F5;
+  font-size: 300%;
+}
+
 page-main .test {
   color: red;
 }
@@ -41653,13 +41686,12 @@ page-main .right-menu {
 
 page-main .user-info-container {
   width: 100%;
-  height: 15%;
-  background: red;
+  height: 80px;
 }
 
 page-main .user-info-container-logo {
-  height: 100%;
-  width: 40%;
+  height: 42px;
+  width: 42px;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -41668,6 +41700,7 @@ page-main .user-info-container-logo {
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
+  margin: 19px;
 }
 
 page-main .user-info-container-data {
@@ -41682,4 +41715,90 @@ page-main .user-info-container-data {
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
+}
+
+page-main .label, page-main .item, page-main .item-inner, page-main .searchbar {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+page-main .searchbar-input {
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+}
+
+page-main .currencyitem {
+  border: 1px solid #E2E4E8;
+  height: 78px;
+  width: 100%;
+  margin-bottom: -1px;
+}
+
+page-main .currencyitemdown {
+  border-top: 1px solid #E2E4E8;
+  width: 100%;
+  height: 1px;
+}
+
+page-main .currpic {
+  width: 36px;
+  height: 36px;
+  margin: 21px;
+  background-image: url(../assets/img/m_icons/BTC.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  display: inline-block;
+}
+
+page-main .currtext {
+  display: inline-block;
+  top: -24px;
+  position: relative;
+}
+
+page-main .currname {
+  color: #585C63;
+  font-family: lato-font;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+page-main .currdescr {
+  color: #97989B;
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+page-main .currprice {
+  height: 100%;
+  position: relative;
+  float: right;
+  padding-top: 29px;
+}
+
+page-main .currval {
+  color: #686C73;
+  font-family: lato-font;
+  font-size: 16px;
+  line-height: 19px;
+  text-align: right;
+  display: inline-block;
+}
+
+page-main .currval::before {
+  content: '$';
+}
+
+page-main .currarrow {
+  background-image: url(../assets/img/m_icons/Arrow-left-g.png);
+  width: 51px;
+  height: 13px;
+  color: black;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  display: inline-block;
 }

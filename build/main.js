@@ -379,6 +379,7 @@ UserData = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_mergeMap__ = __webpack_require__(93);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_mergeMap___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_add_operator_mergeMap__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_forms__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_ionic_angular_platform_platform__ = __webpack_require__(4);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -394,6 +395,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 /**
  * Generated class for the MainPage page.
  *
@@ -401,12 +403,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  * Ionic pages and navigation.
  */
 var MainPage = (function () {
-    function MainPage(navCtrl, navParams, apiService, storage, formBuilder) {
+    function MainPage(navCtrl, navParams, apiService, storage, formBuilder, platform) {
         var _this = this;
         this.navCtrl = navCtrl;
         this.navParams = navParams;
         this.apiService = apiService;
         this.storage = storage;
+        this.platform = platform;
         this.accCode = "";
         this.progressDisplayNone = 'none';
         this.customeLogin = 'Account name';
@@ -416,8 +419,10 @@ var MainPage = (function () {
         this.stepTransaction = 'invisible';
         this.listVisibility = 'visible';
         this.items = [];
-        // private rootPage: string = '';
-        // private array: Array<> = []
+        this.itemsBackUp = [];
+        this.str = '';
+        this.str2 = '';
+        this.str3 = '';
         this.searchTerm = '';
         this.accCreate = formBuilder.group({
             accName: ['', __WEBPACK_IMPORTED_MODULE_5__angular_forms__["g" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_5__angular_forms__["g" /* Validators */].required])]
@@ -435,11 +440,23 @@ var MainPage = (function () {
         this.items.push('eth');
         this.items.push('usd');
         this.items.push('igrc');
+        this.itemsBackUp = this.items;
+        console.log("this items back up", this.itemsBackUp);
     };
     MainPage.prototype.getItems = function (event) {
-        console.log(event);
-        this.items.filter(function (event) {
-        });
+        // console.log(event);
+        // this.items.filter(event =>{
+        // })
+        this.refreshList();
+        var value = event.target.value;
+        if (value && value.trim() != '') {
+            this.items = this.items.filter(function (item) {
+                return (item.toLowerCase().indexOf(value.toLowerCase()) > -1);
+            });
+        }
+    };
+    MainPage.prototype.refreshList = function () {
+        this.items = this.itemsBackUp;
     };
     MainPage.prototype.clearForm = function () {
     };
@@ -460,14 +477,14 @@ var MainPage = (function () {
         });
     };
     MainPage.prototype.ngOnInit = function () {
-        // .mergeMap((_result: Boolean) => this.apiService.login(login, password))
         var _this = this;
+        // .mergeMap((_result: Boolean) => this.apiService.login(login, password))
         var token;
         this.storage.get("USER_TOKEN")
             .then(function (_token) {
             token = _token;
             _this.token = _token;
-            console.log("token ", _token);
+            // console.log("token ", _token);
             _this.apiService.getUserAccounts(_token)
                 .subscribe(function (accounts) {
                 console.log(accounts);
@@ -487,31 +504,73 @@ var MainPage = (function () {
     MainPage.prototype.onCancel = function () {
         this.accCreate.controls.accName.setValue('');
         this.stepTransaction = 'invisible';
+        this.items = this.itemsBackUp;
         // this.listVisibility = 'visible';
     };
     MainPage.prototype.getUserAccounts = function () {
         var _this = this;
         this.apiService.getUserAccounts(this.token)
             .subscribe(function (accounts) {
-            console.log(accounts);
+            // console.log(accounts);
             _this.accountsList = accounts;
+            console.log("this.accountList ", _this.accountsList);
         }, function (error) {
             console.log(error);
         });
     };
     MainPage.prototype.ionViewDidLoad = function () {
-        console.log('ionViewDidLoad MainPage');
+        if (this.platform.is('mobileweb')) {
+            console.log("this is mobileweb");
+            this.str = 'mobileweb';
+        }
+        if (this.platform.is('mobile')) {
+            console.log("mobile");
+            this.str2 = 'mobile';
+        }
+        if (this.platform.is('phablet')) {
+            console.log("phablet");
+        }
+        if (this.platform.is('tablet')) {
+            console.log("tablet");
+        }
+        if (this.platform.is('windows')) {
+            console.log("windows");
+        }
+        if (this.platform.is('iphone')) {
+            console.log("iphone");
+        }
+        if (this.platform.is('ipad')) {
+            console.log("ipad");
+        }
+        if (this.platform.is('ios')) {
+            console.log("ios");
+        }
+        if (this.platform.is('core')) {
+            console.log("core");
+        }
+        if (this.platform.is('cordova')) {
+            console.log("cordova");
+        }
+        if (this.platform.is('android')) {
+            console.log("android");
+            this.str3 = 'android';
+        }
     };
     MainPage.prototype.goToSecondStep = function (code) {
+        this.searchBar.value = '';
         this.accCode = code;
         console.log(this.accCode);
         this.stepTransaction = 'visible';
     };
     return MainPage;
 }());
+__decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* ViewChild */])('searchBar'),
+    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["p" /* Searchbar */])
+], MainPage.prototype, "searchBar", void 0);
 MainPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'page-main',template:/*ion-inline-start:"/home/wildleaf/WebstormProjects/xcoins/src/pages/main/main.html"*/'<ion-menu id="sub-menu" side="right" [content]="subContent">\n  <div class="right-menu">\n\n    <div class="user-info-container">\n      <div class="user-info-container-logo">\n        <custom-icon set="main" name="user-icon" class="user-toolbar"></custom-icon>\n        <!-- <div class="logoxx"></div> -->\n      </div>\n      <div class="user-info-container-data">\n        <p>{{username}}</p>\n        <p>{{email}}</p>\n      </div>\n    </div>\n    <div>\n\n    </div>\n    <div>\n\n    </div>\n    <div>\n\n    </div>\n  </div>\n  <!-- <p>hello sub menu</p>\n  <button>sadas</button> -->\n</ion-menu>\n<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle class="menu_b">\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <!-- <ion-title>Home</ion-title> -->\n    <div class="logo-container">\n      <!-- <custom-icon center set="main" name="logo" class="logo-toolbar"></custom-icon> -->\n      <img class="log_m" alt="" src="assets/img/Logo_Copy_3@3x.png">\n    </div>\n    <!-- <custom-icon set="main" name="user-icon" class="user-toolbar"></custom-icon> -->\n    <button menuToggle="sub-menu" class="user_m" right>\n      <custom-icon set="main" name="user-icon" class="user-toolbar user_l"></custom-icon>\n      <div class="user_b">Username</div>\n    </button>\n  </ion-navbar>\n</ion-header>\n\n<ion-content #subContent>\n  <button ion-button class="btn-add-account" clear (click)="addAccount()">Light Clear</button>\n\n\n  <div [@addAccountTrigger]="addAccountVisibility" class="form-container">\n    <form class="form" [formGroup]="accCreate" (ngSubmit)="createAccountForUser(accCreate.value.accName)">\n      <div class="add-acc-container">\n        <div class="add-acc-name">\n          <input-floating formControlName="accName" [(ngModel)]="login" [type]="text" [border]="borderL" [hint]="customeLogin" [progressDisplay]="progressDisplayNone"\n            [backgroundColorOverlay]="backgroundColorOverlayWhite"></input-floating>\n        </div>\n      </div>\n      <button ion-button class="blue-button" large>CREATE ACCOUNT</button>\n    </form>\n    <button ion-button class="clear-button" color="dark" outline large (click)="onCancel()">CANCEL</button>\n  </div>\n\n  <div [@stepTriggerOne]="stepTransaction" class="first-step">\n    <div>\n      <div class="add-acc-name">\n        <!-- [(ngModel)]="myInput"\n        [showCancelButton]="shouldShowCancel"\n        (ionInput)="onInput($event)"\n        (ionCancel)="onCancel($event)" -->\n        <ion-searchbar [(ngModel)]="searchTerm" (ionInput)="getItems($event)">\n        </ion-searchbar>\n      </div>\n    </div>\n    <ion-list>\n      <ion-item *ngFor="let item of items">\n        <button ion-button margin (click)="goToSecondStep(item)">\n          {{item}}\n        </button>\n      </ion-item>\n    </ion-list>\n  </div>\n  <div [@stepTrigger]="stepTransaction" class="second-step">\n    <form class="form" [formGroup]="accCreate" (ngSubmit)="createAccountForUser(accCreate.value.accName)">\n      <div class="add-acc-container">\n        <div class="add-acc-name">\n          <input-floating formControlName="accName" [(ngModel)]="login" [type]="text" [border]="borderL" [hint]="customeLogin" [progressDisplay]="progressDisplayNone"\n            [backgroundColorOverlay]="backgroundColorOverlayWhite"></input-floating>\n        </div>\n      </div>\n      <button ion-button class="blue-button" large>CREATE ACCOUNT</button>\n    </form>\n    <button ion-button class="clear-button" color="dark" outline large (click)="onCancel()">CANCEL</button>\n  </div>\n\n  <!-- <p>content of the sub page</p> -->\n</ion-content>\n'/*ion-inline-end:"/home/wildleaf/WebstormProjects/xcoins/src/pages/main/main.html"*/,
+        selector: 'page-main',template:/*ion-inline-start:"/home/wildleaf/WebstormProjects/xcoins/src/pages/main/main.html"*/'<ion-menu id="sub-menu" side="right" [content]="subContent">\n  <div class="right-menu">\n\n    <div class="user-info-container">\n      <div class="user-info-container-logo">\n        <custom-icon set="main" name="user-icon" class="user-toolbar"></custom-icon>\n        <!-- <div class="logoxx"></div> -->\n      </div>\n      <div class="user-info-container-data">\n        <div class="usname">Username</div> \n        <div class="usmail">mail@example.com</div>\n      </div>\n    </div>\n    <div>\n\n    </div>\n    <div>\n\n    </div>\n    <div>\n\n    </div>\n  </div>\n  <!-- <p>hello sub menu</p>\n  <button>sadas</button> -->\n</ion-menu>\n<ion-header>\n  <ion-navbar>\n    <button ion-button menuToggle class="menu_b">\n      <ion-icon name="menu"></ion-icon>\n    </button>\n    <!-- <ion-title>Home</ion-title> -->\n    <div class="logo-container">\n      <!-- <custom-icon center set="main" name="logo" class="logo-toolbar"></custom-icon> -->\n      <img class="log_m" alt="" src="assets/img/Logo_Copy_3@3x.png">\n    </div>\n    <!-- <custom-icon set="main" name="user-icon" class="user-toolbar"></custom-icon> -->\n    <button menuToggle="sub-menu" class="user_m" right>\n      <custom-icon set="main" name="user-icon" class="user-toolbar user_l"></custom-icon>\n      <div class="user_b">Username</div>\n    </button>\n  </ion-navbar>\n</ion-header>\n\n<ion-content #subContent>\n  <div class="wrapp">\n    <div class="backbtn">\n      <div class="btn-before"></div>\n      <button class="btn-add-account" clear (click)="addAccount()">ADD ACCOUNT</button>\n    </div>\n\n  <!-- <div [@addAccountTrigger]="addAccountVisibility" class="form-container">\n    <form class="form" [formGroup]="accCreate" (ngSubmit)="createAccountForUser(accCreate.value.accName)">\n      <div class="add-acc-container">\n        <div class="add-acc-name">\n          <input-floating formControlName="accName" [(ngModel)]="login" [type]="text" [border]="borderL" [hint]="customeLogin" [progressDisplay]="progressDisplayNone"\n            [backgroundColorOverlay]="backgroundColorOverlayWhite"></input-floating>\n        </div>\n      </div>\n      <button ion-button class="blue-button" large>CREATE ACCOUNT</button>\n    </form>\n    <button ion-button class="clear-button" color="dark" outline large (click)="onCancel()">CANCEL</button>\n  </div> -->\n\n  <div [@stepTriggerOne]="stepTransaction" class="first-step">\n    <div>\n      <div class="add-acc-name">\n        <!-- [(ngModel)]="myInput"\n        [showCancelButton]="shouldShowCancel"\n        (ionInput)="onInput($event)"\n        (ionCancel)="onCancel($event)" -->\n        <ion-searchbar #searchBar id="searchBar" [(ngModel)]="searchTerm" (ionInput)="getItems($event)">\n        </ion-searchbar>\n      </div>\n    </div>\n    <ion-list>\n      <ion-item *ngFor="let item of items">\n        <div (click)="goToSecondStep(item)" class="currencyitem">\n          <div class="currpic"></div>\n          <div class="currtext">\n            <div class="currname">BTC</div>\n            <div class="currdescr">Bitcoin</div>\n          </div>\n          <div class="currprice">\n            <div class="currval">9,979.86</div>\n            <div class="currarrow"></div>\n          </div>\n        </div>\n      </ion-item>\n      <div class="currencyitemdown"></div>\n\n    </ion-list>\n  </div>\n  <div [@stepTriggerTwo]="stepTransaction" class="second-step">\n    <form class="form" [formGroup]="accCreate" (ngSubmit)="createAccountForUser(accCreate.value.accName)">\n      <div class="add-acc-container">\n        <div class="add-acc-name">\n          <input-floating formControlName="accName" [(ngModel)]="login" [type]="text" [border]="borderL" [hint]="customeLogin" [progressDisplay]="progressDisplayNone"\n            [backgroundColorOverlay]="backgroundColorOverlayWhite"></input-floating>\n        </div>\n      </div>\n      <button ion-button class="blue-button" large>CREATE ACCOUNT</button>\n    </form>\n    <button ion-button class="clear-button" color="dark" outline large (click)="onCancel()">CANCEL</button>\n  </div>\n</div>\n\n  <!-- <p>content of the sub page</p> -->\n</ion-content>\n'/*ion-inline-end:"/home/wildleaf/WebstormProjects/xcoins/src/pages/main/main.html"*/,
         animations: [
             Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_33" /* trigger */])('addAccountTrigger', [
                 Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_30" /* state */])('invisible', Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_31" /* style */])({ opacity: '0', display: 'none' })),
@@ -519,27 +578,24 @@ MainPage = __decorate([
                 Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_32" /* transition */])('visible => invisible', Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_19" /* animate */])('200ms ease-in')),
                 Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_32" /* transition */])('invisible => visible', Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_19" /* animate */])('200ms ease-out'))
             ]),
-            Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_33" /* trigger */])('stepTrigger', [
+            Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_33" /* trigger */])('stepTriggerTwo', [
                 Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_30" /* state */])('invisible', Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_31" /* style */])({ transform: 'translate(100%, -100%)' })),
                 Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_30" /* state */])('visible', Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_31" /* style */])({ transform: 'translate(0%, -100%)' })),
-                Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_32" /* transition */])('visible => invisible', Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_19" /* animate */])('200ms ease-in')),
-                Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_32" /* transition */])('invisible => visible', Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_19" /* animate */])('200ms ease-out'))
+                Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_32" /* transition */])('visible => invisible', Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_19" /* animate */])('300ms ease-in')),
+                Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_32" /* transition */])('invisible => visible', Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_19" /* animate */])('300ms ease-out'))
             ]),
             Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_33" /* trigger */])('stepTriggerOne', [
                 Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_30" /* state */])('invisible', Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_31" /* style */])({ transform: 'translateX(0%)' })),
                 Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_30" /* state */])('visible', Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_31" /* style */])({ transform: 'translateX(-100%)' })),
-                Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_32" /* transition */])('visible => invisible', Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_19" /* animate */])('200ms ease-in')),
-                Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_32" /* transition */])('invisible => visible', Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_19" /* animate */])('200ms ease-out'))
+                Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_32" /* transition */])('visible => invisible', Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_19" /* animate */])('300ms ease-in')),
+                Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_32" /* transition */])('invisible => visible', Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_19" /* animate */])('300ms ease-out'))
             ])
         ]
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* NavParams */],
-        __WEBPACK_IMPORTED_MODULE_2__providers_api_service__["a" /* ApiService */], __WEBPACK_IMPORTED_MODULE_3__ionic_storage__["b" /* Storage */], __WEBPACK_IMPORTED_MODULE_5__angular_forms__["a" /* FormBuilder */]])
+        __WEBPACK_IMPORTED_MODULE_2__providers_api_service__["a" /* ApiService */], __WEBPACK_IMPORTED_MODULE_3__ionic_storage__["b" /* Storage */], __WEBPACK_IMPORTED_MODULE_5__angular_forms__["a" /* FormBuilder */], __WEBPACK_IMPORTED_MODULE_6_ionic_angular_platform_platform__["a" /* Platform */]])
 ], MainPage);
 
-// function isBigEnough(element, index, array) { 
-//    return (element >= 10); 
-// }  
 //# sourceMappingURL=main.js.map
 
 /***/ }),
@@ -1134,8 +1190,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 var LoginPage = (function () {
     function LoginPage(navCtrl, navParams, apiService, formBuilder, translate, screenOrientation, platform, storage, appCtrl, events) {
-        // document.getElementsByTagName("video")[0].play();
-        // console.log("video current time", document.getElementsByTagName("video")[0].currentTime)
         var _this = this;
         this.navCtrl = navCtrl;
         this.navParams = navParams;
@@ -1215,17 +1269,8 @@ var LoginPage = (function () {
         this.forceCollapse = false;
         this.avaible = false;
         this.videoStatus = false;
-        // window.addEventListener("load", function () {
-        //   var video = (<HTMLVideoElement>document.getElementById("bgvid")),
-        //       timeToStop = 2;
-        //   video!.addEventListener("timeupdate", function () {
-        //     if(this.currentTime > 0){
-        //     }
-        //       if (this.currentTime >= timeToStop) {
-        //           this.pause();
-        //       }
-        //   }, false);
-        // }, false);
+        this.videoSrc = '';
+        this.videoType = '';
         this.translate.setDefaultLang(__WEBPACK_IMPORTED_MODULE_6__app_app_module__["b" /* language */]);
         this.authForm = formBuilder.group({
             login: ['', __WEBPACK_IMPORTED_MODULE_4__angular_forms__["g" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_4__angular_forms__["g" /* Validators */].required])],
@@ -1240,6 +1285,7 @@ var LoginPage = (function () {
         this.signForm.valueChanges.subscribe(function (_value) { return _this.onErrors(); });
         this.authForm.valueChanges.subscribe(function (_value) { return _this.clearForm(); });
         this.signForm.controls.login.valueChanges.subscribe(function (_value) { return _this.checkUserName(); });
+        // this.signForm.controls.repeatPassword.valueChanges.subscribe(_value => this.checkRedBorder())
     }
     LoginPage.prototype.isPlaying = function (event) {
         console.log("video is playing", event);
@@ -1282,24 +1328,10 @@ var LoginPage = (function () {
     // }
     LoginPage.prototype.checkUserName = function () {
         var _this = this;
-        // if(this.avaible){
         setTimeout(function () {
             _this.isLoginAvaible();
         }, 1000);
-        // }
     };
-    // hideError(){
-    //   if(this.signForm.controls.password.value.length == ""){
-    //     this.opacityState = 'invisible';
-    //   }
-    // }
-    // showError(){
-    //   // if(this.signForm.controls.password.value.length > 0 && this.signForm.controls.password.value.length <){
-    //   //   this.opacityState = 'invisible';
-    //   // } else {
-    //     this.opacityState = 'visible';
-    //   // }
-    // }
     LoginPage.prototype.ionViewWillEnter = function () {
         var _this = this;
         console.log("Platform width ", this.platform.width());
@@ -1674,7 +1706,21 @@ var LoginPage = (function () {
     LoginPage.prototype.forgotPassword = function () {
     };
     LoginPage.prototype.ionViewDidLoad = function () {
-        // this.introState = 'done';
+        if (this.platform.is('core')) {
+            this.videoSrc = 'assets/video/back.mp4';
+            this.videoType = 'video/mp4';
+            console.log("MP4");
+        }
+        else if (this.platform.is('mobile') || this.platform.is('android') || this.platform.is('mobileweb')) {
+            this.videoSrc = 'assets/video/back.webm';
+            this.videoType = 'video/webm';
+            console.log("WEBM");
+        }
+        else {
+            this.videoSrc = 'assets/video/back.mp4';
+            this.videoType = 'video/mp4';
+            console.log("MP4");
+        }
     };
     LoginPage.prototype.onLogin = function () {
         var _this = this;
@@ -1790,7 +1836,7 @@ __decorate([
 LoginPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_3_ionic_angular__["i" /* IonicPage */])(),
     Object(__WEBPACK_IMPORTED_MODULE_2__angular_core__["n" /* Component */])({
-        selector: 'page-login',template:/*ion-inline-start:"/home/wildleaf/WebstormProjects/xcoins/src/pages/login/login.html"*/'<ion-content [ngClass]="{\'android\': android == true, \'browser\': browser == true}" style="background: white">\n\n  <video (playing)="isPlaying(\'playing\')" (ended)="isPlaying(\'ended\')" controls="false" preload="auto" class="background-image" poster="assets/img/bg-placeholder.png" webkit-playsinline\n    id="bgvid" #bgvid playsinline autoplay muted loop src="assets/video/nexus.mp4">\n    <!-- <source src="assets/video/video-background.mp4" type="video/mp4"> -->\n  </video>\n\n  <div class="overlay-bg"></div>\n  <div [@overlayPic]="overlayPicVisibility"  class="overlay-pic"></div>\n\n  <div [@errorTrigger]="errorState" class="error-pop-up">\n    <button ion-button icon-only clear class="close-error" (click)="closeError()">\n      <ion-icon ios="ios-close" md="md-close"></ion-icon>\n    </button>\n    <custom-icon set="signup" name="warning" class="sign-up-icon"></custom-icon>\n    <p [innerHTML]="errorMessage"></p>\n  </div>\n\n  <div class="content" [@mainTrigger]="mainState">\n    <div class="logo" [@errorLogoTrigger]="errorStateMobile" [@logoTransitionTrigger]="logoState" [@fadeTrigger]="mainState">\n      <img class="log_m" src="assets/img/logo.svg" alt="">\n      <p class="slog_m">Bitcoin for everyone </p>\n    </div>\n\n    <div class="input-fields-container" [@fadeTrigger]="mainState">\n      <div [@transitionTrigger]="state" class="intro-buttons">\n        <button ion-button class="intro-signup-button mybutt" color="dark" outline large (click)="onSignUp()">Sign Up</button>\n        <button ion-button class="blue-button no-radius mybutt" large (click)="onLogin()">Login</button>\n      </div>\n      <form [@loginTrigger]="loginVisibility" [formGroup]="authForm" (ngSubmit)="authorize(authForm.value.login, authForm.value.password)"\n        class="input-fields">\n\n        <div class=input-container>\n          <div [@slideDown]="loginError" class="error-message">\n            <custom-icon set="signup" name="warning" class="sign-up-icon"></custom-icon>\n            <p>Login is incorrect, try again</p>\n          </div>\n          <div class="input-item" [@slideLeft]="introState" [ngClass]="{\'form-error\': loginError == \'done\'}">\n            <custom-icon set="login" name="social" class="icon-custom-color icon"></custom-icon>\n            <input (focus)="clearForm()" force="forceCollapse" (tap)="scrollToBot()" class="custom-input-login" formControlName="login"\n              type="email" value="" placeholder="Login">\n            <!-- <ion-input (focus)="clearForm()" class="input" formControlName="login" type="email" value="" placeholder="Login"></ion-input> -->\n          </div>\n          <div [@slideDown]="passwordError" class="error-message">\n            <custom-icon set="signup" name="warning" class="sign-up-icon"></custom-icon>\n            <p>Password is incorrect, try again</p>\n          </div>\n          <div class="input-item" [@slideRight]="introState" [ngClass]="{\'form-error\': passwordError == \'done\'}">\n            <custom-icon set="login" name="lock" class="icon-custom-color icon" custom-icon></custom-icon>\n            <!-- <ion-input (focus)="clearForm()" class="input" formControlName="password" type="password" placeholder="Password"></ion-input> -->\n            <input (focus)="clearForm()" (tap)="scrollToBot()" class="custom-input-pass" formControlName="password" type="password" placeholder="Password">\n          </div>\n        </div>\n        <div [@slideRight]="introState" class="forget-password">\n          <button ion-button type=button color="primary" (click)="forgotPassword()" small clear>\n            <p class="forgot-button" no-margin no-padding>Forgot password?</p>\n          </button>\n        </div>\n        <button ion-button class="blue-button no-radius mybutt" large>Login</button>\n        <div [@slideDown]="introState" class="buttons-signup">\n          <p class="dont-have-account">Don\'t have account?</p>\n          <button ion-button type=button color="primary" small clear (click)="onSignUpFromLogin()">\n            <p class="sign-button" no-margin no-padding (tap)="onSignUpFromLogin()">Sign Up</p>\n          </button>\n        </div>\n      </form>\n    </div>\n  </div>\n\n  <div class="content" [@signUpTrigger]="signUpVisibility">\n    <div class="signup-input-fields-container">\n      <form class="signup-input-fields" [formGroup]="signForm" (ngSubmit)="registration(signForm.value.login, signForm.value.password)">\n        <div class="error-message-signup full-width" [@opacityTrigger]="opacityLoginError">\n          <custom-icon set="signup" name="warning" class="sign-up-icon"></custom-icon>\n          <p>{{ loginErrorSignUp}}</p>\n        </div>\n        <div class="error-message-signup full-width" [@opacityTrigger]="opacityErrorL">\n          <custom-icon set="signup" name="warning" class="sign-up-icon"></custom-icon>\n          <p>{{logggInError}}</p>\n        </div>\n        <div class="custom-input-field-container" [@slideLeft]="signUpIntroState">\n          <input-floating #floating1 formControlName="login"  [(ngModel)]="login" [type]="text"\n            [border]="borderL" [hint]="customeLogin" [hintError]="" [hintErrorColor]="" [hintColor]="" [progressDisplay]="progressDisplayNone"\n            [backgroundColorOverlay]="backgroundColorOverlayWhite"></input-floating>\n          <div class="chevron" [@opacityTrigger]="loginAvailable">\n            <ion-icon ios="ios-checkmark" md="md-checkmark" color="secondary" style="font-size: 200%;"></ion-icon>\n          </div>\n        </div>\n        <div class="error-message-signup full-width" [@opacityTrigger]="opacityErrorP">\n          <custom-icon set="signup" name="warning" class="sign-up-icon"></custom-icon>\n          <p>Please enter password</p>\n        </div>\n        <div class="custom-input-field-container" (tap)="isLoginAvaible()" [@slideRight]="signUpIntroState">\n          <input-floating #custome formControlName="password" [(ngModel)]="password" [type]="passType" [border]="borderP" [hint]="customePassword"\n            [hintError]="passHintError" [hintErrorColor]="colorVar" [hintColor]="" \n            [progressDisplay]="progressDisplay" [spacing]="letterSpacing" [backgroundColorOverlay]="backgroundColorOverlay"\n            [progressWidth]="progressWidth"></input-floating>\n          <div class="chevron" [@opacityTrigger]="passAvailable">\n            <ion-icon ios="ios-checkmark" md="md-checkmark" color="secondary" style="font-size: 200%;"></ion-icon>\n          </div>\n        </div>\n        <div class="error-message-signup full-width margin-1em" [@opacityTrigger]="opacityPasswordError">\n          <custom-icon set="signup" name="warning" class="sign-up-icon"></custom-icon>\n          <p>Password doesn\'t match</p>\n        </div>\n        <div class="pass-message full-width margin-1em" [@opacityTrigger]="opacityState">\n          <div>\n            <ion-icon ios="ios-information-circle" md="md-information-circle"></ion-icon>\n          </div>\n          <p>{{passwordHelpHint}}</p>\n        </div>\n        \n        <div class="error-message-signup full-width" [@opacityTrigger]="opacityErrorRP">\n          <custom-icon set="signup" name="warning" class="sign-up-icon"></custom-icon>\n          <p>Please repeat password</p>\n        </div>\n        <div class="custom-input-field-container" [@slideLeft]="signUpIntroState">\n          <input-floating formControlName="repeatPassword" [(ngModel)]="repeatPassword" [type]="passType" [border]="borderRP" [hint]="customeRepeatPassword"\n            [hintError]="" [hintErrorColor]=""  [hintColor]="" [progressDisplay]="progressDisplayNone"\n            [spacing]="letterSpacing" [backgroundColorOverlay]="backgroundColorOverlayWhite"></input-floating>\n          <div class="chevron" [@opacityTrigger]="passReAvailable">\n            <ion-icon ios="ios-checkmark" md="md-checkmark" color="secondary" style="font-size: 200%;"></ion-icon>\n          </div>\n        </div>\n        <button ion-button class="blue-button no-radius full-width margTop" large>Sign Up</button>\n      </form>\n    </div>\n  </div>\n\n\n  <div class="loading-overlay" padding [hidden]="!showProgress">\n    <div class="loading-overlay-bg"></div>\n    <ion-spinner name="crescent"></ion-spinner>\n  </div>\n\n</ion-content>\n'/*ion-inline-end:"/home/wildleaf/WebstormProjects/xcoins/src/pages/login/login.html"*/,
+        selector: 'page-login',template:/*ion-inline-start:"/home/wildleaf/WebstormProjects/xcoins/src/pages/login/login.html"*/'<ion-content [ngClass]="{\'android\': android == true, \'browser\': browser == true}" style="background: white">\n\n  <video (playing)="isPlaying(\'playing\')" (ended)="isPlaying(\'ended\')" controls="false" preload="auto" class="background-image" poster="assets/img/bg-placeholder.png" webkit-playsinline\n    id="bgvid" #bgvid playsinline autoplay muted loop >\n    <source [src]="videoSrc" [type]="videoType">\n  </video>\n\n  <div class="overlay-bg"></div>\n  <div [@overlayPic]="overlayPicVisibility"  class="overlay-pic"></div>\n\n  <div [@errorTrigger]="errorState" class="error-pop-up">\n    <button ion-button icon-only clear class="close-error" (click)="closeError()">\n      <ion-icon ios="ios-close" md="md-close"></ion-icon>\n    </button>\n    <custom-icon set="signup" name="warning" class="sign-up-icon"></custom-icon>\n    <p [innerHTML]="errorMessage"></p>\n  </div>\n\n  <div class="content" [@mainTrigger]="mainState">\n    <div class="logo" [@errorLogoTrigger]="errorStateMobile" [@logoTransitionTrigger]="logoState" [@fadeTrigger]="mainState">\n      <img class="log_m" src="assets/img/logo.svg" alt="">\n      <p class="slog_m">Bitcoin for everyone </p>\n    </div>\n\n    <div class="input-fields-container" [@fadeTrigger]="mainState">\n      <div [@transitionTrigger]="state" class="intro-buttons">\n        <button ion-button class="intro-signup-button mybutt" color="dark" outline large (click)="onSignUp()">Sign Up</button>\n        <button ion-button class="blue-button no-radius mybutt" large (click)="onLogin()">Login</button>\n      </div>\n      <form [@loginTrigger]="loginVisibility" [formGroup]="authForm" (ngSubmit)="authorize(authForm.value.login, authForm.value.password)"\n        class="input-fields">\n\n        <div class=input-container>\n          <div [@slideDown]="loginError" class="error-message">\n            <custom-icon set="signup" name="warning" class="sign-up-icon"></custom-icon>\n            <p>Login is incorrect, try again</p>\n          </div>\n          <div class="input-item" [@slideLeft]="introState" [ngClass]="{\'form-error\': loginError == \'done\'}">\n            <custom-icon set="login" name="social" class="icon-custom-color icon"></custom-icon>\n            <input (focus)="clearForm()" force="forceCollapse" (tap)="scrollToBot()" class="custom-input-login" formControlName="login"\n              type="email" value="" placeholder="Login">\n            <!-- <ion-input (focus)="clearForm()" class="input" formControlName="login" type="email" value="" placeholder="Login"></ion-input> -->\n          </div>\n          <div [@slideDown]="passwordError" class="error-message">\n            <custom-icon set="signup" name="warning" class="sign-up-icon"></custom-icon>\n            <p>Password is incorrect, try again</p>\n          </div>\n          <div class="input-item" [@slideRight]="introState" [ngClass]="{\'form-error\': passwordError == \'done\'}">\n            <custom-icon set="login" name="lock" class="icon-custom-color icon" custom-icon></custom-icon>\n            <!-- <ion-input (focus)="clearForm()" class="input" formControlName="password" type="password" placeholder="Password"></ion-input> -->\n            <input (focus)="clearForm()" (tap)="scrollToBot()" class="custom-input-pass" formControlName="password" type="password" placeholder="Password">\n          </div>\n        </div>\n        <div [@slideRight]="introState" class="forget-password">\n          <button ion-button type=button color="primary" (click)="forgotPassword()" small clear>\n            <p class="forgot-button" no-margin no-padding>Forgot password?</p>\n          </button>\n        </div>\n        <button ion-button class="blue-button no-radius mybutt" large>Login</button>\n        <div [@slideDown]="introState" class="buttons-signup">\n          <p class="dont-have-account">Don\'t have account?</p>\n          <button ion-button type=button color="primary" small clear (click)="onSignUpFromLogin()">\n            <p class="sign-button" no-margin no-padding (tap)="onSignUpFromLogin()">Sign Up</p>\n          </button>\n        </div>\n      </form>\n    </div>\n  </div>\n\n  <div class="content" [@signUpTrigger]="signUpVisibility">\n    <div class="signup-input-fields-container">\n      <form class="signup-input-fields" [formGroup]="signForm" (ngSubmit)="registration(signForm.value.login, signForm.value.password)">\n        <div class="error-message-signup full-width" [@opacityTrigger]="opacityLoginError">\n          <custom-icon set="signup" name="warning" class="sign-up-icon"></custom-icon>\n          <p>{{ loginErrorSignUp}}</p>\n        </div>\n        <div class="error-message-signup full-width" [@opacityTrigger]="opacityErrorL">\n          <custom-icon set="signup" name="warning" class="sign-up-icon"></custom-icon>\n          <p>{{logggInError}}</p>\n        </div>\n        <div class="custom-input-field-container" [@slideLeft]="signUpIntroState">\n          <input-floating #floating1 formControlName="login"  [(ngModel)]="login" [type]="text"\n            [border]="borderL" [hint]="customeLogin" [hintError]="" [hintErrorColor]="" [hintColor]="" [progressDisplay]="progressDisplayNone"\n            [backgroundColorOverlay]="backgroundColorOverlayWhite"></input-floating>\n          <div class="chevron" [@opacityTrigger]="loginAvailable">\n            <ion-icon ios="ios-checkmark" md="md-checkmark" color="secondary" style="font-size: 200%;"></ion-icon>\n          </div>\n        </div>\n        <div class="error-message-signup full-width" [@opacityTrigger]="opacityErrorP">\n          <custom-icon set="signup" name="warning" class="sign-up-icon"></custom-icon>\n          <p>Please enter password</p>\n        </div>\n        <div class="custom-input-field-container" (tap)="isLoginAvaible()" [@slideRight]="signUpIntroState">\n          <input-floating #custome formControlName="password" [(ngModel)]="password" [type]="passType" [border]="borderP" [hint]="customePassword"\n            [hintError]="passHintError" [hintErrorColor]="colorVar" [hintColor]="" \n            [progressDisplay]="progressDisplay" [spacing]="letterSpacing" [backgroundColorOverlay]="backgroundColorOverlay"\n            [progressWidth]="progressWidth"></input-floating>\n          <div class="chevron" [@opacityTrigger]="passAvailable">\n            <ion-icon ios="ios-checkmark" md="md-checkmark" color="secondary" style="font-size: 200%;"></ion-icon>\n          </div>\n        </div>\n        <div class="error-message-signup full-width margin-1em" [@opacityTrigger]="opacityPasswordError">\n          <custom-icon set="signup" name="warning" class="sign-up-icon"></custom-icon>\n          <p>Password doesn\'t match</p>\n        </div>\n        <div class="pass-message full-width margin-1em" [@opacityTrigger]="opacityState">\n          <div>\n            <ion-icon ios="ios-information-circle" md="md-information-circle"></ion-icon>\n          </div>\n          <p>{{passwordHelpHint}}</p>\n        </div>\n        \n        <div class="error-message-signup full-width" [@opacityTrigger]="opacityErrorRP">\n          <custom-icon set="signup" name="warning" class="sign-up-icon"></custom-icon>\n          <p>Please repeat password</p>\n        </div>\n        <div class="custom-input-field-container" [@slideLeft]="signUpIntroState">\n          <input-floating formControlName="repeatPassword" [(ngModel)]="repeatPassword" [type]="passType" [border]="borderRP" [hint]="customeRepeatPassword"\n            [hintError]="" [hintErrorColor]=""  [hintColor]="" [progressDisplay]="progressDisplayNone"\n            [spacing]="letterSpacing" [backgroundColorOverlay]="backgroundColorOverlayWhite"></input-floating>\n          <div class="chevron" [@opacityTrigger]="passReAvailable">\n            <ion-icon ios="ios-checkmark" md="md-checkmark" color="secondary" style="font-size: 200%;"></ion-icon>\n          </div>\n        </div>\n        <button ion-button class="blue-button no-radius full-width margTop" large>Sign Up</button>\n      </form>\n    </div>\n  </div>\n\n\n  <div class="loading-overlay" padding [hidden]="!showProgress">\n    <div class="loading-overlay-bg"></div>\n    <ion-spinner name="crescent"></ion-spinner>\n  </div>\n\n</ion-content>\n'/*ion-inline-end:"/home/wildleaf/WebstormProjects/xcoins/src/pages/login/login.html"*/,
         animations: [
             Object(__WEBPACK_IMPORTED_MODULE_2__angular_core__["_33" /* trigger */])('errorTrigger', [
                 Object(__WEBPACK_IMPORTED_MODULE_2__angular_core__["_30" /* state */])('invisible', Object(__WEBPACK_IMPORTED_MODULE_2__angular_core__["_31" /* style */])({ transform: 'translateY(-6em)', display: 'none' })),
